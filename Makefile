@@ -1,12 +1,12 @@
 # =====================
-# ModelSim Multi-TB Makefile (Updated for new file structure)
+# ModelSim Multi-TB Makefile
 # =====================
 
 # List of testbenches (example: TESTBENCHES = theta_step_tb rho_step_tb)
-TESTBENCHES = modular_reduce_tb zeta_mul_table_tb base_case_mul_tb
+TESTBENCHES =
 
 # RTL design and package files
-PKG_SRCS = rtl/poly_arith_pkg.sv
+PKG_SRCS = 
 DESIGN_SRCS = $(wildcard rtl/*.sv)
 COMMON_SRCS = $(wildcard rtl/*.svh)
 

@@ -6,8 +6,8 @@
  */
 
 interface axis_if #(
-    parameter DWIDTH = 256,
-    parameter KEEP_WIDTH = DWIDTH/8
+    parameter int DWIDTH = 256,
+    parameter int KEEP_WIDTH = DWIDTH/8
 );
     logic [DWIDTH-1:0]     tdata;
     logic                  tvalid;
