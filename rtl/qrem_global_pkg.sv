@@ -77,7 +77,8 @@ package qrem_global_pkg;
         MODE_SAMPLE_CBD    = 3'd1, // Op: SHAKE256  | Sampler: CBD       | Target: s, e, e1, e2
         MODE_HASH_SHA3_256 = 3'd2, // Op: SHA3-256  | Sampler: Bypass    | Target: H(pk), H(m), H(c)
         MODE_HASH_SHA3_512 = 3'd3, // Op: SHA3-512  | Sampler: Bypass    | Target: G(d), G(m, h)
-        MODE_HASH_SHAKE256 = 3'd4  // Op: SHAKE256  | Sampler: Bypass    | Target: J(z, c)
+        MODE_HASH_SHAKE256 = 3'd4, // Op: SHAKE256  | Sampler: Bypass    | Target: J(z, c)
+        MODE_ABSORB_POLY   = 3'd5  // Op: SHA3-256  | Input: Poly Mem Rd | Target: H(poly[...])
     } hs_mode_t;
 
     // =====================================================
