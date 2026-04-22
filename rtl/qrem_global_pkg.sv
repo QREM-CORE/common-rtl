@@ -50,15 +50,18 @@ package qrem_global_pkg;
     // Seed / Protocol Storage Enums
     // =====================================================
 
-    typedef enum logic [2:0] {
-        SEED_ID_D     = 3'd0,
-        SEED_ID_Z     = 3'd1,
-        SEED_ID_M     = 3'd2,
-        SEED_ID_RHO   = 3'd3,
-        SEED_ID_SIGMA = 3'd4,
-        SEED_ID_HEK   = 3'd5,
-        SEED_ID_SS    = 3'd6,
-        SEED_ID_TMP   = 3'd7
+    typedef enum logic [3:0] {
+        SEED_ID_D     = 4'd0,
+        SEED_ID_RHO   = 4'd1,
+        SEED_ID_M     = 4'd2,
+        SEED_ID_K     = 4'd3,
+        SEED_ID_Z     = 4'd4,
+        SEED_ID_K_BAR = 4'd5,
+        SEED_ID_R     = 4'd6,
+        SEED_ID_HEK   = 4'd7,
+        SEED_ID_SIGMA = 4'd8,
+        SEED_ID_SS    = 4'd9,
+        SEED_ID_TMP   = 4'd10
     } seed_id_e;
 
     // =====================================================
