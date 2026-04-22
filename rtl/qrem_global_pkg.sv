@@ -51,29 +51,36 @@ package qrem_global_pkg;
     // =====================================================
     typedef enum logic [4:0] {
         // === High-Level Artifact Opcodes ===
+        TR_OP_IDLE                  = 5'd0,
+
         // --- KEYGEN ---
-        TR_OP_KG_INGEST_D      = 5'd0,  // (AXI-RX -> SeedBank(d))
-        TR_OP_KG_EXPORT_DK_PKE = 5'd1,  // (PolyMem(s) -> Encode12 -> AXI-TX)
-        TR_OP_KG_EXPORT_EK_PKE = 5'd2,  // (PolyMem(t) -> Encode12 -> AXI-TX/HSU, SeedBank(rho) -> AXI-TX)
-        TR_OP_KG_EXPORT_HEK    = 5'd3,  // (HSU(H(ek)) -> AXI-TX), SeedBank(rho) -> HSU (transcoder not responsible for this)
+        TR_OP_KG_INGEST_D           = 5'd1,     // AXI-RX -> SeedBank(d)
+        // Note: Not ingesting z because z is not used in KeyGen phase
+        TR_OP_KG_EXPORT_DK_PKE      = 5'd2,     // PolyMem(s-hat) -> Encode12 -> AXI-TX
+        TR_OP_KG_EXPORT_EK_PKE_1    = 5'd3,     // PolyMem(t) -> Encode12 -> AXI-TX
+        TR_OP_KG_EXPORT_EK_PKE_2    = 5'd4,     // SeedBank(rho) -> AXI-TX
+        TR_OP_KG_EXPORT_HEK         = 5'd5,     // SeedBank(H(ek)) -> AXI-TX
+                                                // Note: core controller is responsible for creating H(ek)
 
         // --- ENCAP ---
-        TR_OP_EN_INGEST_M      = 5'd4,  // (AXI-RX -> SeedBank(m))
-        TR_OP_EN_INGEST_EK     = 5'd5,  // (AXI-RX(ek:encoded(t-hat), rho) -> Decode(t-hat)/HSU(ek) -> PolyMem(t), extract Seed(rho) -> seedbank)
-        TR_OP_EN_MSG_DEC       = 5'd6,  // (SeedBank(m) -> Decode_1 -> Decompress_1 -> PolyMem(mu))
-        TR_OP_EN_EXPORT_CT_1   = 5'd7,  // (PolyMem(u) -> Compress_DU -> Encode_DU -> AXI-TX)
-        TR_OP_EN_EXPORT_CT_2   = 5'd8,  // (PolyMem(v) -> Compress_DV -> Encode_DV -> AXI-TX)
-        TR_OP_EN_EXPORT_K      = 5'd9,  // (Seedbank(k) -> AXI-TX)
+        TR_OP_EN_INGEST_M           = 5'd6,     // AXI-RX -> SeedBank(m)
+        TR_OP_EN_INGEST_EK_1        = 5'd7,     // AXI-RX(ek:t-hat) -> Decode_12(t-hat) -> PolyMem(t)
+        TR_OP_EN_INGEST_EK_2        = 5'd8,     // AXI-RX(ek:rho) -> SeedBank(rho)
+                                                // Note: core controller is responsible for creating H(ek)
+        TR_OP_EN_MSG_DEC            = 5'd9,     // SeedBank(m) -> Decode_1/Decompress_1 -> PolyMem(mu)
+        TR_OP_EN_EXPORT_CT_1        = 5'd10,    // PolyMem(u) -> Compress_DU/Encode_DU -> AXI-TX
+        TR_OP_EN_EXPORT_CT_2        = 5'd11,    // PolyMem(v) -> Compress_DV/Encode_DV -> AXI-TX
+        TR_OP_EN_EXPORT_K           = 5'd12,    // Seedbank(k) -> AXI-TX
 
         // --- DECAP ---
-        TR_OP_DC_INGEST_DK_PKE = 5'd10, // (AXI-RX -> Decode12 -> PolyMem(s))
-        TR_OP_DC_INGEST_C1     = 5'd11, // (AXI-RX -> Decode_DU -> Decompress_DU -> PolyMem(u'))
-        TR_OP_DC_INGEST_C2     = 5'd12, // (AXI-RX -> Decode_DV -> Decompress_DV -> PolyMem(v'))
-        TR_OP_DC_INGEST_Z      = 5'd13, // (AXI-RX -> SeedBank(z))
-        TR_OP_DC_MSG_ENC       = 5'd14, // (PolyMem(w) -> Compress_1 -> Encode_1 -> Seedbank(m'))
-        TR_OP_DC_EXPORT_K      = 5'd15, // (Seedbank(k) -> AXI-TX)
-        TR_OP_DC_EXPORT_K_BAR  = 5'd16, // (Seedbank(k-bar) -> AXI-TX)
-        TR_OP_DC_EXPORT_R      = 5'd17  // (Seedbank(r) -> AXI-TX)
+        TR_OP_DC_INGEST_DK_PKE      = 5'd13,    // AXI-RX -> Decode12 -> PolyMem(s)
+        TR_OP_DC_INGEST_C1          = 5'd14,    // AXI-RX -> HSU and Decode_DU/Decompress_DU -> PolyMem(u')
+        TR_OP_DC_INGEST_C2          = 5'd15,    // AXI-RX -> HSU and Decode_DV/Decompress_DV -> PolyMem(v')
+        TR_OP_DC_INGEST_Z           = 5'd16,    // AXI-RX -> SeedBank(z)
+        TR_OP_DC_MSG_ENC            = 5'd17,    // PolyMem(w) -> Compress_1/Encode_1 -> Seedbank(m')
+        TR_OP_DC_EXPORT_K           = 5'd18,    // Seedbank(k) -> AXI-TX
+        TR_OP_DC_EXPORT_K_BAR       = 5'd19,    // Seedbank(k-bar) -> AXI-TX
+        TR_OP_DC_EXPORT_R           = 5'd20     // Seedbank(r) -> AXI-TX
     } tr_opcode_t;
 
 endpackage
