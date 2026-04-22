@@ -19,6 +19,48 @@ package qrem_global_pkg;
     parameter int NCOEFF                            = 256;
     parameter int Q                                 = 3329;
 
+    // Polynomial Memory Subsystem Parameters
+    parameter int NUM_POLYS                         = 32;
+    parameter int POLY_ID_WIDTH                     = $clog2(NUM_POLYS);
+
+    // Seed Memory Parameters
+    parameter int SEED_DEPTH                        = 32;
+    parameter int SEED_W                            = 64;
+    parameter int SEED_BEATS                        = 4; // 256-bit objects
+
+    // =====================================================
+    // Global Memory Arbitration Enums
+    // =====================================================
+
+    typedef enum logic [2:0] {
+        OWNER_NONE    = 3'd0,
+        OWNER_PAU     = 3'd1,
+        OWNER_PAU_AUX = 3'd2,
+        OWNER_HSU     = 3'd3,
+        OWNER_TR      = 3'd4
+    } client_owner_e;
+
+    typedef enum logic [1:0] {
+        REQ_NONE  = 2'd0,
+        REQ_READ  = 2'd1,
+        REQ_WRITE = 2'd2
+    } req_kind_e;
+
+    // =====================================================
+    // Seed / Protocol Storage Enums
+    // =====================================================
+
+    typedef enum logic [2:0] {
+        SEED_ID_D     = 3'd0,
+        SEED_ID_Z     = 3'd1,
+        SEED_ID_M     = 3'd2,
+        SEED_ID_RHO   = 3'd3,
+        SEED_ID_SIGMA = 3'd4,
+        SEED_ID_HEK   = 3'd5,
+        SEED_ID_SS    = 3'd6,
+        SEED_ID_TMP   = 3'd7
+    } seed_id_e;
+
     // =====================================================
     // Core Control Unit Parameters/Enums
     // =====================================================
@@ -39,12 +81,6 @@ package qrem_global_pkg;
     // Polynomial Arithmetic Unit Parameters/Enums
     // =====================================================
 
-
-    // =====================================================
-    // Polynomial Memory Subsystem Parameters/Enums
-    // =====================================================
-    parameter int NUM_POLYS                         = 16;
-    parameter int POLY_ID_WIDTH                     = $clog2(NUM_POLYS);
 
     // =====================================================
     // Transcoder Unit Parameters/Enums
