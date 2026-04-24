@@ -85,6 +85,7 @@ package qrem_global_pkg;
     // Polynomial Arithmetic Unit Parameters/Enums
     // =====================================================
     typedef enum logic [3:0] {
+        PE_MODE_IDLE   = 4'b0000, // Idle / Uninitialized
         PE_MODE_CWM    = 4'b1000, // Coordinate-Wise Multiplication
         PE_MODE_NTT    = 4'b1010, // Number Theoretic Transform
         PE_MODE_INTT   = 4'b1111, // Inverse Number Theoretic Transform
